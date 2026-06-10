@@ -1,5 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
+#include <X11/XF86keysym.h>
+
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -76,6 +78,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_c,      killclient,     {0} },
+    { 0,                            XK_Print,  spawn,          SHCMD("flameshot gui") },
+    { MODKEY,                       XK_e,      spawn,          SHCMD("thunar") },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
@@ -86,7 +90,14 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	TAGKEYS(                        XK_1,                      0)
+    { 0, XF86XK_AudioMute,           spawn, SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle") },
+    { 0, XF86XK_RFKill,              spawn, SHCMD("rfkill toggle wifi && rfkill toggle bluetooth") },
+    { 0, XF86XK_MonBrightnessDown,   spawn, SHCMD("brightnessctl s 10%-") },
+    { 0, XF86XK_MonBrightnessUp,     spawn, SHCMD("brightnessctl s +10%") },
+    { 0, XF86XK_AudioLowerVolume,    spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%") },
+    { 0, XF86XK_AudioRaiseVolume,    spawn, SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%") },
+    { 0, XF86XK_Display,             spawn, SHCMD("~/.screenlayout/toggle.sh") },
+    TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
